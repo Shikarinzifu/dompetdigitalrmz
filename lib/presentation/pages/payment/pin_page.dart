@@ -76,7 +76,7 @@ class _PinPageState extends State<PinPage> {
       context.read<OtpBloc>().add(OtpSendEmail());
       _startResendTimer();
     } else if (_twoFaMethod == AppConstants.twoFaNotif) {
-      context.read<OtpBloc>().add(OtpSendFirebase());
+      context.read<OtpBloc>().add(OtpSendNotification());
       _startResendTimer();
     }
   }
@@ -97,7 +97,7 @@ class _PinPageState extends State<PinPage> {
     if (_twoFaMethod == AppConstants.twoFaSmtp) {
       context.read<OtpBloc>().add(OtpSendEmail());
     } else if (_twoFaMethod == AppConstants.twoFaNotif) {
-      context.read<OtpBloc>().add(OtpSendFirebase());
+      context.read<OtpBloc>().add(OtpSendNotification());
     }
     _startResendTimer();
   }
@@ -108,7 +108,7 @@ class _PinPageState extends State<PinPage> {
       case AppConstants.twoFaSmtp:
         return AppConstants.otpTypeEmail;
       case AppConstants.twoFaNotif:
-        return AppConstants.otpTypeFirebase;
+        return AppConstants.otpTypeNotification;
       default:
         return AppConstants.otpTypeTotp;
     }
