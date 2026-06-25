@@ -11,9 +11,9 @@ class OtpRepositoryImpl implements OtpRepository {
   OtpRepositoryImpl(this._remote, this._authRepo);
 
   @override
-  Future<OtpSentEntity> sendOtpFirebase() async {
+  Future<OtpSentEntity> sendOtpNotification() async {
     try {
-      return await _remote.sendOtpFirebase();
+      return await _remote.sendOtpNotification();
     } on ServerException catch (e) {
       throw ServerFailure(e.message);
     } on NetworkException catch (e) {
