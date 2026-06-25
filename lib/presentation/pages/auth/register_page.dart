@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/error/failures.dart';
@@ -26,29 +25,18 @@ class _RegisterPageState extends State<RegisterPage> {
   bool get _valid => _name.length > 1 && _email.contains('@') && _pw.length >= 6 && _agree;
 
   Future<void> _register() async {
+    if (!_valid) return;
     setState(() => _loading = true);
     try {
-      // 1. Buat akun di Firebase
-      final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      // Kirim data registrasi ke backend
+      await sl<RegisterWithOtpUsecase>().call(
+        name: _name,
         email: _email,
         password: _pw,
       );
-      await credential.user?.updateDisplayName(_name);
 
-      // 2. Ambil Firebase ID Token lalu kirim ke backend
-      final idToken = await credential.user?.getIdToken();
-      if (idToken == null) throw Exception('Gagal mendapatkan token Firebase');
-
-      await sl<RegisterWithOtpUsecase>()(idToken);
-
-      // 3. Backend sudah buat user + kirim OTP ke email → ke halaman verifikasi
+      // Backend sudah buat user + kirim OTP ke email → ke halaman verifikasi
       if (mounted) context.go('/verify-email');
-    } on FirebaseAuthException catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.message ?? 'Registrasi gagal.'), backgroundColor: AppColors.red),
-        );
-      }
     } on ServerFailure catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
