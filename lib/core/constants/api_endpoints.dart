@@ -7,14 +7,14 @@ class ApiEndpoints {
   static const String health = '$_base/health';
 
   // Auth
-  static const String verifyToken = '$_base/auth/verify-token';
+  static const String login = '$_base/auth/login';
   static const String register = '$_base/auth/register';
   static const String verifyEmailOtp = '$_base/auth/verify-email-otp';
   static const String me = '$_base/auth/me';
   static const String fcmToken = '$_base/auth/fcm-token';
 
   // OTP
-  static const String sendOtpFirebase = '$_base/otp/send-firebase';
+  static const String sendOtpNotification = '$_base/otp/send-notification';
   static const String sendOtpEmail = '$_base/otp/send-email';
   static const String confirmOtp = '$_base/otp/confirm';
   static const String totpRegister = '$_base/otp/totp/register';
