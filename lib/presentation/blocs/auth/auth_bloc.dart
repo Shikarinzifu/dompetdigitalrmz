@@ -1,10 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import '../../../domain/entities/user_entity.dart';
-import '../../../domain/usecases/auth/verify_firebase_token_usecase.dart';
+import '../../../domain/usecases/auth/login_with_email_usecase.dart';
 import '../../../domain/usecases/auth/get_me_usecase.dart';
 import '../../../domain/usecases/auth/logout_usecase.dart';
-import '../../../domain/usecases/auth/send_otp_usecase.dart';
 import '../../../domain/repositories/auth_repository.dart';
 import '../../../core/error/failures.dart';
 
@@ -15,11 +14,12 @@ abstract class AuthEvent extends Equatable {
 }
 
 class AuthCheckRequested extends AuthEvent {}
-class AuthLoginWithFirebase extends AuthEvent {
-  final String firebaseToken;
-  AuthLoginWithFirebase(this.firebaseToken);
+class AuthLoginWithEmail extends AuthEvent {
+  final String email;
+  final String password;
+  AuthLoginWithEmail({required this.email, required this.password});
   @override
-  List<Object?> get props => [firebaseToken];
+  List<Object?> get props => [email, password];
 }
 class AuthLogoutRequested extends AuthEvent {}
 class AuthUpdateFcmToken extends AuthEvent {
@@ -59,23 +59,23 @@ class AuthError extends AuthState {
 }
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final VerifyFirebaseTokenUsecase _verifyToken;
+  final LoginWithEmailUsecase _loginWithEmail;
   final GetMeUsecase _getMe;
   final LogoutUsecase _logout;
   final AuthRepository _authRepo;
 
   AuthBloc({
-    required VerifyFirebaseTokenUsecase verifyToken,
+    required LoginWithEmailUsecase loginWithEmail,
     required GetMeUsecase getMe,
     required LogoutUsecase logout,
     required AuthRepository authRepo,
-  })  : _verifyToken = verifyToken,
+  })  : _loginWithEmail = loginWithEmail,
         _getMe = getMe,
         _logout = logout,
         _authRepo = authRepo,
         super(AuthInitial()) {
     on<AuthCheckRequested>(_onCheckRequested);
-    on<AuthLoginWithFirebase>(_onLoginWithFirebase);
+    on<AuthLoginWithEmail>(_onLoginWithEmail);
     on<AuthLogoutRequested>(_onLogout);
     on<AuthUpdateFcmToken>(_onUpdateFcm);
   }
@@ -106,10 +106,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(AuthAuthenticated(user));
   }
 
-  Future<void> _onLoginWithFirebase(AuthLoginWithFirebase event, Emitter<AuthState> emit) async {
+  Future<void> _onLoginWithEmail(AuthLoginWithEmail event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
     try {
-      final result = await _verifyToken(event.firebaseToken);
+      final result = await _loginWithEmail(event.email, event.password);
       emit(AuthNeedsVerification(result.user, result.token));
     } on AuthFailure catch (e) {
       emit(AuthError(e.message));
