@@ -21,7 +21,7 @@ import '../domain/usecases/auth/logout_usecase.dart';
 import '../domain/usecases/auth/register_with_otp_usecase.dart';
 import '../domain/usecases/auth/send_otp_usecase.dart';
 import '../domain/usecases/auth/verify_email_otp_usecase.dart';
-import '../domain/usecases/auth/verify_firebase_token_usecase.dart';
+import '../domain/usecases/auth/login_with_email_usecase.dart';
 import '../domain/usecases/payment/payment_usecases.dart';
 import '../presentation/blocs/account/account_bloc.dart';
 import '../presentation/blocs/auth/auth_bloc.dart';
@@ -77,12 +77,12 @@ Future<void> init() async {
   );
 
   // Use Cases — Auth
-  sl.registerLazySingleton(() => VerifyFirebaseTokenUsecase(sl()));
+  sl.registerLazySingleton(() => LoginWithEmailUsecase(sl()));
   sl.registerLazySingleton(() => RegisterWithOtpUsecase(sl()));
   sl.registerLazySingleton(() => VerifyEmailOtpUsecase(sl()));
   sl.registerLazySingleton(() => GetMeUsecase(sl()));
   sl.registerLazySingleton(() => LogoutUsecase(sl()));
-  sl.registerLazySingleton(() => SendOtpFirebaseUsecase(sl()));
+  sl.registerLazySingleton(() => SendOtpNotificationUsecase(sl()));
   sl.registerLazySingleton(() => SendOtpEmailUsecase(sl()));
   sl.registerLazySingleton(() => ConfirmOtpUsecase(sl()));
   sl.registerLazySingleton(() => RegisterTotpUsecase(sl()));
@@ -98,13 +98,13 @@ Future<void> init() async {
 
   // BLoCs
   sl.registerFactory(() => AuthBloc(
-        verifyToken: sl(),
+        loginWithEmail: sl(),
         getMe: sl(),
         logout: sl(),
         authRepo: sl(),
       ));
   sl.registerFactory(() => OtpBloc(
-        sendFirebase: sl(),
+        sendNotification: sl(),
         sendEmail: sl(),
         confirm: sl(),
         registerTotp: sl(),
