@@ -3,7 +3,7 @@ import '../../../core/network/api_client.dart';
 import '../../../domain/entities/otp_entity.dart';
 
 abstract class OtpRemoteDatasource {
-  Future<OtpSentEntity> sendOtpFirebase();
+  Future<OtpSentEntity> sendOtpNotification();
   Future<OtpSentEntity> sendOtpEmail();
   Future<void> confirmOtp({required String code, required String otpType});
   Future<TotpSetupEntity> registerTotp();
@@ -15,8 +15,8 @@ class OtpRemoteDatasourceImpl implements OtpRemoteDatasource {
   OtpRemoteDatasourceImpl(this._client);
 
   @override
-  Future<OtpSentEntity> sendOtpFirebase() async {
-    final response = await _client.post(ApiEndpoints.sendOtpFirebase);
+  Future<OtpSentEntity> sendOtpNotification() async {
+    final response = await _client.post(ApiEndpoints.sendOtpNotification);
     final data = response['data'] as Map<String, dynamic>;
     return OtpSentEntity(
       otpType: data['otp_type'] as String,
