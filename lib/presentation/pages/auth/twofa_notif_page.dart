@@ -19,7 +19,7 @@ class _TwoFANotifPageState extends State<TwoFANotifPage> {
   @override
   void initState() {
     super.initState();
-    context.read<OtpBloc>().add(OtpSendFirebase());
+    context.read<OtpBloc>().add(OtpSendNotification());
   }
 
   @override
