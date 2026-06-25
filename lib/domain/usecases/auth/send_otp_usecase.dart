@@ -1,10 +1,10 @@
 import '../../repositories/otp_repository.dart';
 import '../../entities/otp_entity.dart';
 
-class SendOtpFirebaseUsecase {
+class SendOtpNotificationUsecase {
   final OtpRepository _repository;
-  SendOtpFirebaseUsecase(this._repository);
-  Future<OtpSentEntity> call() => _repository.sendOtpFirebase();
+  SendOtpNotificationUsecase(this._repository);
+  Future<OtpSentEntity> call() => _repository.sendOtpNotification();
 }
 
 class SendOtpEmailUsecase {
