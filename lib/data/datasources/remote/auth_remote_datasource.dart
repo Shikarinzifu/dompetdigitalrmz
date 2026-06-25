@@ -3,8 +3,12 @@ import '../../../core/network/api_client.dart';
 import '../../models/user_model.dart';
 
 abstract class AuthRemoteDatasource {
-  Future<({UserModel user, String token})> verifyFirebaseToken(String firebaseToken);
-  Future<({UserModel user, String token})> registerWithOtp(String firebaseToken);
+  Future<({UserModel user, String token})> loginWithEmail(String email, String password);
+  Future<({UserModel user, String token})> registerWithOtp({
+    required String name,
+    required String email,
+    required String password,
+  });
   Future<void> verifyEmailOtp(String code);
   Future<UserModel> getMe();
   Future<void> updateFcmToken(String fcmToken);
@@ -17,10 +21,10 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
   AuthRemoteDatasourceImpl(this._client);
 
   @override
-  Future<({UserModel user, String token})> verifyFirebaseToken(String firebaseToken) async {
+  Future<({UserModel user, String token})> loginWithEmail(String email, String password) async {
     final response = await _client.post(
-      ApiEndpoints.verifyToken,
-      data: {'firebase_token': firebaseToken},
+      ApiEndpoints.login,
+      data: {'email': email, 'password': password},
     );
     final data = response['data'] as Map<String, dynamic>;
     final token = data['access_token'] as String;
@@ -30,10 +34,14 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
   }
 
   @override
-  Future<({UserModel user, String token})> registerWithOtp(String firebaseToken) async {
+  Future<({UserModel user, String token})> registerWithOtp({
+    required String name,
+    required String email,
+    required String password,
+  }) async {
     final response = await _client.post(
       ApiEndpoints.register,
-      data: {'firebase_token': firebaseToken},
+      data: {'name': name, 'email': email, 'password': password},
     );
     final data = response['data'] as Map<String, dynamic>;
     final token = data['access_token'] as String;
