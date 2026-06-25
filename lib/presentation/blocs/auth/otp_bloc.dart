@@ -10,7 +10,7 @@ abstract class OtpEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class OtpSendFirebase extends OtpEvent {}
+class OtpSendNotification extends OtpEvent {}
 class OtpSendEmail extends OtpEvent {}
 class OtpConfirm extends OtpEvent {
   final String code;
@@ -64,25 +64,25 @@ class OtpError extends OtpState {
 }
 
 class OtpBloc extends Bloc<OtpEvent, OtpState> {
-  final SendOtpFirebaseUsecase _sendFirebase;
+  final SendOtpNotificationUsecase _sendNotification;
   final SendOtpEmailUsecase _sendEmail;
   final ConfirmOtpUsecase _confirm;
   final RegisterTotpUsecase _registerTotp;
   final VerifyTotpUsecase _verifyTotp;
 
   OtpBloc({
-    required SendOtpFirebaseUsecase sendFirebase,
+    required SendOtpNotificationUsecase sendNotification,
     required SendOtpEmailUsecase sendEmail,
     required ConfirmOtpUsecase confirm,
     required RegisterTotpUsecase registerTotp,
     required VerifyTotpUsecase verifyTotp,
-  })  : _sendFirebase = sendFirebase,
+  })  : _sendNotification = sendNotification,
         _sendEmail = sendEmail,
         _confirm = confirm,
         _registerTotp = registerTotp,
         _verifyTotp = verifyTotp,
         super(OtpInitial()) {
-    on<OtpSendFirebase>(_onSendFirebase);
+    on<OtpSendNotification>(_onSendNotification);
     on<OtpSendEmail>(_onSendEmail);
     on<OtpConfirm>(_onConfirm);
     on<OtpRegisterTotp>(_onRegisterTotp);
@@ -90,10 +90,10 @@ class OtpBloc extends Bloc<OtpEvent, OtpState> {
     on<OtpReset>((_, emit) => emit(OtpInitial()));
   }
 
-  Future<void> _onSendFirebase(OtpSendFirebase _, Emitter<OtpState> emit) async {
+  Future<void> _onSendNotification(OtpSendNotification _, Emitter<OtpState> emit) async {
     emit(OtpLoading());
     try {
-      final entity = await _sendFirebase();
+      final entity = await _sendNotification();
       emit(OtpSent(entity));
     } on ServerFailure catch (e) {
       emit(OtpError(e.message));
