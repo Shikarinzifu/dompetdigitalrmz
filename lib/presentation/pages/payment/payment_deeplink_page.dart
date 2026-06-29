@@ -172,11 +172,11 @@ class PaymentDeeplinkPage extends StatelessWidget {
                       boxShadow: AppColors.shadowSoft,
                       border: Border.all(color: AppColors.primaryLight, width: 1.8),
                     ),
-                    child: Row(
+                    child: const Row(
                       children: [
-                        const AppLogo(size: 40),
-                        const SizedBox(width: 12),
-                        const Expanded(
+                        AppLogo(size: 40),
+                        SizedBox(width: 12),
+                        Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -192,7 +192,7 @@ class PaymentDeeplinkPage extends StatelessWidget {
                             ],
                           ),
                         ),
-                        const Icon(Icons.check_rounded, size: 20, color: AppColors.primary),
+                        Icon(Icons.check_rounded, size: 20, color: AppColors.primary),
                       ],
                     ),
                   ),
@@ -203,8 +203,8 @@ class PaymentDeeplinkPage extends StatelessWidget {
                       color: AppColors.primarySurface,
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: Row(
-                      children: const [
+                    child: const Row(
+                      children: [
                         Icon(DkgIcons.shieldCheck, size: 18, color: AppColors.primary),
                         SizedBox(width: 8),
                         Expanded(

@@ -6,7 +6,6 @@ import '../../widgets/app_avatar.dart';
 import '../../widgets/app_button.dart';
 import '../../widgets/app_logo.dart';
 import '../../widgets/app_top_bar.dart';
-import '../../widgets/feature_icon.dart';
 
 class TransferConfirmPage extends StatelessWidget {
   final Map<String, dynamic> recipient;
@@ -124,11 +123,11 @@ class TransferConfirmPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(16),
                       boxShadow: AppColors.shadowSoft,
                     ),
-                    child: Row(
+                    child: const Row(
                       children: [
-                        const AppLogo(size: 30),
-                        const SizedBox(width: 12),
-                        const Expanded(
+                        AppLogo(size: 30),
+                        SizedBox(width: 12),
+                        Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -139,7 +138,7 @@ class TransferConfirmPage extends StatelessWidget {
                             ],
                           ),
                         ),
-                        const Icon(Icons.check_rounded, size: 20, color: AppColors.primary),
+                        Icon(Icons.check_rounded, size: 20, color: AppColors.primary),
                       ],
                     ),
                   ),

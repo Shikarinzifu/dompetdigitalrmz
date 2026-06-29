@@ -4,7 +4,6 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/currency_formatter.dart';
 import '../../widgets/app_button.dart';
 import '../../widgets/app_logo.dart';
-import '../../widgets/feature_icon.dart';
 
 const _orange = Color(0xFFFF6A2B);
 
@@ -173,11 +172,11 @@ class MerchantCheckoutPage extends StatelessWidget {
                       boxShadow: AppColors.shadowSoft,
                       border: Border.all(color: AppColors.primaryLight, width: 1.8),
                     ),
-                    child: Row(
+                    child: const Row(
                       children: [
-                        const AppLogo(size: 40),
-                        const SizedBox(width: 12),
-                        const Expanded(
+                        AppLogo(size: 40),
+                        SizedBox(width: 12),
+                        Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -193,7 +192,7 @@ class MerchantCheckoutPage extends StatelessWidget {
                             ],
                           ),
                         ),
-                        const Icon(Icons.check_rounded, size: 20, color: AppColors.primary),
+                        Icon(Icons.check_rounded, size: 20, color: AppColors.primary),
                       ],
                     ),
                   ),
