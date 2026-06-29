@@ -14,7 +14,7 @@ class AppTheme {
         onPrimary: Colors.white,
         secondary: AppColors.green,
         surface: AppColors.white,
-        background: AppColors.bg,
+        surfaceContainerLowest: AppColors.bg,
         error: AppColors.red,
       ),
       scaffoldBackgroundColor: AppColors.bg,

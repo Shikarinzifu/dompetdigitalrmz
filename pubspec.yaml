@@ -30,8 +30,18 @@ dependencies:
   # Local Storage
   flutter_secure_storage: ^9.2.4
 
+  # Firebase
+  firebase_core: ^4.6.0
+  firebase_messaging: ^16.1.3
+
   # Deeplink
   app_links: ^6.4.0
+
+  # URL Launcher
+  url_launcher: ^6.3.1
+
+  # QR Scanner
+  mobile_scanner: ^6.0.10
 
   # UI
   intl: ^0.20.2
