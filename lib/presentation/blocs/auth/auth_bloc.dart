@@ -60,7 +60,6 @@ class AuthError extends AuthState {
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final LoginWithEmailUsecase _loginWithEmail;
-  final GetMeUsecase _getMe;
   final LogoutUsecase _logout;
   final AuthRepository _authRepo;
 
@@ -70,7 +69,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     required LogoutUsecase logout,
     required AuthRepository authRepo,
   })  : _loginWithEmail = loginWithEmail,
-        _getMe = getMe,
         _logout = logout,
         _authRepo = authRepo,
         super(AuthInitial()) {
