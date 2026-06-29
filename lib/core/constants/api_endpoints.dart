@@ -7,8 +7,8 @@ class ApiEndpoints {
   static const String health = '$_base/health';
 
   // Auth
-  static const String login = '$_base/auth/login';
-  static const String register = '$_base/auth/register';
+  static const String login = '$_base/auth/email/login';
+  static const String register = '$_base/auth/email/register';
   static const String verifyEmailOtp = '$_base/auth/verify-email-otp';
   static const String me = '$_base/auth/me';
   static const String fcmToken = '$_base/auth/fcm-token';
