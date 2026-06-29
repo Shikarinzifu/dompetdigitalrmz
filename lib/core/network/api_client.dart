@@ -10,8 +10,8 @@ class ApiClient {
   ApiClient({String? token}) {
     _dio = Dio(BaseOptions(
       baseUrl: AppConstants.baseUrl,
-      connectTimeout: Duration(seconds: AppConstants.connectTimeout),
-      receiveTimeout: Duration(seconds: AppConstants.receiveTimeout),
+      connectTimeout: const Duration(seconds: AppConstants.connectTimeout),
+      receiveTimeout: const Duration(seconds: AppConstants.receiveTimeout),
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -129,6 +129,6 @@ class ApiClient {
         return ServerException('Terjadi kesalahan server.', statusCode: e.response?.statusCode);
       }
     }
-    return ServerException('Terjadi kesalahan jaringan.');
+    return const ServerException('Terjadi kesalahan jaringan.');
   }
 }
