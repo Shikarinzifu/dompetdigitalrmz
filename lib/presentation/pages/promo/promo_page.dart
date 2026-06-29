@@ -22,9 +22,9 @@ class PromoPage extends StatelessWidget {
           Container(
             color: Colors.white,
             padding: EdgeInsets.fromLTRB(20, MediaQuery.of(context).padding.top + 12, 20, 18),
-            child: Column(
+            child: const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children: [
                 Text('Promo & Reward',
                     style: TextStyle(
                       fontFamily: 'PlusJakartaSans',
@@ -63,9 +63,9 @@ class PromoPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Column(
+                      const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
+                        children: [
                           AppBadge(label: 'SPESIAL MAHASISWA', tone: 'amber'),
                           SizedBox(height: 12),
                           Text('Bayar kuliah,\ndapat cashback 💸',
