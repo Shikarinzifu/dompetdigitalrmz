@@ -181,11 +181,11 @@ class _HomePageState extends State<HomePage> {
         children: [
           Row(
             children: [
-              Row(
+              const Row(
                 children: [
-                  const AppLogo(size: 26),
-                  const SizedBox(width: 7),
-                  const Text('Saldo DKG',
+                  AppLogo(size: 26),
+                  SizedBox(width: 7),
+                  Text('Saldo DKG',
                       style: TextStyle(
                         fontFamily: 'PlusJakartaSans',
                         fontSize: 13,
@@ -295,14 +295,14 @@ class _HomePageState extends State<HomePage> {
               borderRadius: BorderRadius.circular(16),
               boxShadow: AppColors.shadowSoft,
             ),
-            child: Row(
+            child: const Row(
               children: [
-                const FeatureIcon(
+                FeatureIcon(
                     icon: Icons.star_outline_rounded, tone: 'amber', size: 38, iconSize: 19),
-                const SizedBox(width: 10),
+                SizedBox(width: 10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     Text('Poin Kampus',
                         style: TextStyle(
                             fontFamily: 'PlusJakartaSans',
@@ -330,14 +330,14 @@ class _HomePageState extends State<HomePage> {
               borderRadius: BorderRadius.circular(16),
               boxShadow: AppColors.shadowSoft,
             ),
-            child: Row(
+            child: const Row(
               children: [
-                const FeatureIcon(
+                FeatureIcon(
                     icon: Icons.qr_code_rounded, tone: 'green', size: 38, iconSize: 19),
-                const SizedBox(width: 10),
+                SizedBox(width: 10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     Text('KTM Digital',
                         style: TextStyle(
                             fontFamily: 'PlusJakartaSans',
