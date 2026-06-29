@@ -24,6 +24,7 @@ import '../../presentation/pages/promo/promo_page.dart';
 import '../../presentation/pages/splash/splash_page.dart';
 import '../../presentation/pages/success/success_page.dart';
 import '../../presentation/pages/topup/topup_page.dart';
+import '../../presentation/pages/withdraw/withdraw_page.dart';
 import '../../presentation/pages/transfer/transfer_amount_page.dart';
 import '../../presentation/pages/transfer/transfer_confirm_page.dart';
 import '../../presentation/pages/transfer/transfer_page.dart';
@@ -116,6 +117,7 @@ class AppRouter {
           ),
           // Payment flows (no tab bar)
           GoRoute(path: '/topup', builder: (_, __) => _withPayment(const TopUpPage())),
+          GoRoute(path: '/withdraw', builder: (_, __) => _withPayment(const WithdrawPage())),
           GoRoute(path: '/transfer', builder: (_, __) => const TransferPage()),
           GoRoute(
             path: '/transfer/amount',

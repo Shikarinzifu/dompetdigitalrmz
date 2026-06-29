@@ -8,4 +8,5 @@ abstract class PaymentRepository {
     required String otpCode,
     required String otpType,
   });
+  Future<({double balance, double amount})> withdraw(double amount);
 }

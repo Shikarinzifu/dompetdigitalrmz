@@ -86,6 +86,8 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<UserEntity> getMe() async {
     try {
       return await _remote.getMe();
+    } on UnauthorizedException catch (e) {
+      throw AuthFailure(e.message);
     } on ServerException catch (e) {
       throw ServerFailure(e.message);
     } on NetworkException catch (e) {

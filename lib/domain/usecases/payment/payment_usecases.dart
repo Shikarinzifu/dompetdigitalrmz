@@ -24,3 +24,10 @@ class TransferUsecase {
         otpType: otpType,
       );
 }
+
+class WithdrawUsecase {
+  final PaymentRepository _repository;
+  WithdrawUsecase(this._repository);
+  Future<({double balance, double amount})> call(double amount) =>
+      _repository.withdraw(amount);
+}

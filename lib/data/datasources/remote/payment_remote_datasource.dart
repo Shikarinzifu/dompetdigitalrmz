@@ -10,6 +10,7 @@ abstract class PaymentRemoteDatasource {
     required String otpCode,
     required String otpType,
   });
+  Future<({double balance, double amount})> withdraw(double amount);
 }
 
 class PaymentRemoteDatasourceImpl implements PaymentRemoteDatasource {
@@ -47,6 +48,16 @@ class PaymentRemoteDatasourceImpl implements PaymentRemoteDatasource {
       balanceBefore: (data['balance_before'] as num).toDouble(),
       balanceAfter: (data['balance_after'] as num).toDouble(),
       createdAt: DateTime.tryParse(data['created_at'] as String? ?? '') ?? DateTime.now(),
+    );
+  }
+
+  @override
+  Future<({double balance, double amount})> withdraw(double amount) async {
+    final response = await _client.post(ApiEndpoints.withdraw, data: {'amount': amount});
+    final data = response['data'] as Map<String, dynamic>;
+    return (
+      balance: (data['balance'] as num).toDouble(),
+      amount: (data['amount'] as num).toDouble(),
     );
   }
 }

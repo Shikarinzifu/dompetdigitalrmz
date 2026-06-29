@@ -32,4 +32,5 @@ class ApiEndpoints {
   // Payment
   static const String topup = '$_base/payment/topup';
   static const String transfer = '$_base/payment/transfer';
+  static const String withdraw = '$_base/payment/withdraw';
 }

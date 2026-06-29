@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import '../../../core/error/exceptions.dart';
 import '../../../core/error/failures.dart';
 import '../../../domain/entities/payment_result_entity.dart';
 import '../../../domain/usecases/payment/payment_usecases.dart';
@@ -33,6 +34,13 @@ class PaymentTransferRequested extends PaymentEvent {
 }
 
 class PaymentReset extends PaymentEvent {}
+
+class PaymentWithdrawRequested extends PaymentEvent {
+  final double amount;
+  PaymentWithdrawRequested(this.amount);
+  @override
+  List<Object?> get props => [amount];
+}
 
 // States
 abstract class PaymentState extends Equatable {
@@ -83,13 +91,19 @@ class PaymentError extends PaymentState {
 class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
   final TopupUsecase _topup;
   final TransferUsecase _transfer;
+  final WithdrawUsecase _withdraw;
 
-  PaymentBloc({required TopupUsecase topup, required TransferUsecase transfer})
-      : _topup = topup,
+  PaymentBloc({
+    required TopupUsecase topup,
+    required TransferUsecase transfer,
+    required WithdrawUsecase withdraw,
+  })  : _topup = topup,
         _transfer = transfer,
+        _withdraw = withdraw,
         super(PaymentInitial()) {
     on<PaymentTopupRequested>(_onTopup);
     on<PaymentTransferRequested>(_onTransfer);
+    on<PaymentWithdrawRequested>(_onWithdraw);
     on<PaymentReset>((_, emit) => emit(PaymentInitial()));
   }
 
@@ -102,6 +116,14 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
       emit(PaymentError(e.message));
     } on NetworkFailure catch (e) {
       emit(PaymentError(e.message));
+    } on UnauthorizedException catch (e) {
+      emit(PaymentError(e.message));
+    } on ServerException catch (e) {
+      emit(PaymentError(e.message));
+    } on NetworkException catch (e) {
+      emit(PaymentError(e.message));
+    } catch (e) {
+      emit(PaymentError('Terjadi kesalahan. Silakan coba lagi.'));
     }
   }
 
@@ -123,6 +145,34 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
       emit(PaymentError(e.message));
     } on NetworkFailure catch (e) {
       emit(PaymentError(e.message));
+    } on UnauthorizedException catch (e) {
+      emit(PaymentError(e.message));
+    } on ServerException catch (e) {
+      emit(PaymentError(e.message));
+    } on NetworkException catch (e) {
+      emit(PaymentError(e.message));
+    } catch (e) {
+      emit(PaymentError('Terjadi kesalahan. Silakan coba lagi.'));
+    }
+  }
+
+  Future<void> _onWithdraw(PaymentWithdrawRequested event, Emitter<PaymentState> emit) async {
+    emit(PaymentLoading());
+    try {
+      final result = await _withdraw(event.amount);
+      emit(PaymentTopupSuccess(balance: result.balance, amount: result.amount));
+    } on ServerFailure catch (e) {
+      emit(PaymentError(e.message));
+    } on NetworkFailure catch (e) {
+      emit(PaymentError(e.message));
+    } on UnauthorizedException catch (e) {
+      emit(PaymentError(e.message));
+    } on ServerException catch (e) {
+      emit(PaymentError(e.message));
+    } on NetworkException catch (e) {
+      emit(PaymentError(e.message));
+    } catch (e) {
+      emit(PaymentError('Terjadi kesalahan. Silakan coba lagi.'));
     }
   }
 }

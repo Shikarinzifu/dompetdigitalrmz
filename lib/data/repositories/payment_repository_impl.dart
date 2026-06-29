@@ -47,4 +47,15 @@ class PaymentRepositoryImpl implements PaymentRepository {
       throw NetworkFailure(e.message);
     }
   }
+
+  @override
+  Future<({double balance, double amount})> withdraw(double amount) async {
+    try {
+      return await _remote.withdraw(amount);
+    } on ServerException catch (e) {
+      throw ServerFailure(e.message);
+    } on NetworkException catch (e) {
+      throw NetworkFailure(e.message);
+    }
+  }
 }

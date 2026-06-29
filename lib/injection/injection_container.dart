@@ -103,6 +103,7 @@ Future<void> init() async {
   // Use Cases — Payment
   sl.registerLazySingleton(() => TopupUsecase(sl()));
   sl.registerLazySingleton(() => TransferUsecase(sl()));
+  sl.registerLazySingleton(() => WithdrawUsecase(sl()));
 
   // BLoCs
   sl.registerFactory(() => AuthBloc(
@@ -126,6 +127,7 @@ Future<void> init() async {
   sl.registerFactory(() => PaymentBloc(
         topup: sl(),
         transfer: sl(),
+        withdraw: sl(),
       ));
 }
 

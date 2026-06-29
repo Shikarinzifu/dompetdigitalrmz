@@ -107,13 +107,27 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
     final verified = await _authRepo.isAuthVerified();
     if (!verified) {
-      // Login berhasil tapi 2FA belum dikonfirmasi sebelum app ditutup →
-      // anggap sesi tidak valid, mulai ulang dari awal (login/Google chooser).
       await _authRepo.logout();
       emit(AuthUnauthenticated());
       return;
     }
-    emit(AuthAuthenticated(user));
+    // Validasi token ke server — kalau expired/invalid, auto logout
+    try {
+      final freshUser = await _authRepo.getMe();
+      emit(AuthAuthenticated(freshUser));
+    } on AuthFailure {
+      // Token expired atau invalid → logout otomatis
+      await _authRepo.logout();
+      emit(AuthUnauthenticated());
+    } on ServerFailure {
+      // Server error → logout otomatis
+      await _authRepo.logout();
+      emit(AuthUnauthenticated());
+    } catch (_) {
+      // Network error atau error lain → tetap anggap authenticated
+      // (user bisa pakai app secara offline atau coba nanti)
+      emit(AuthAuthenticated(user));
+    }
   }
 
   Future<void> _onLoginWithEmail(AuthLoginWithEmail event, Emitter<AuthState> emit) async {
