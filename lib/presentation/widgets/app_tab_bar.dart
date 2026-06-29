@@ -42,7 +42,7 @@ class AppTabBar extends StatelessWidget {
                   child: Container(
                     width: 56,
                     height: 56,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       gradient: AppColors.primaryGradient,
                       shape: BoxShape.circle,
                       boxShadow: AppColors.shadowPrimary,
