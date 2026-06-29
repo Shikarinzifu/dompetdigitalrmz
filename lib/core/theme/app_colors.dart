@@ -38,7 +38,7 @@ class AppColors {
   );
 
   // Shadows
-  static List<BoxShadow> shadowCard = [
+  static const List<BoxShadow> shadowCard = [
     BoxShadow(
       color: Color(0x14000000),
       blurRadius: 24,
@@ -46,7 +46,7 @@ class AppColors {
       offset: Offset(0, 4),
     ),
   ];
-  static List<BoxShadow> shadowSoft = [
+  static const List<BoxShadow> shadowSoft = [
     BoxShadow(
       color: Color(0x0A000000),
       blurRadius: 12,
@@ -54,7 +54,7 @@ class AppColors {
       offset: Offset(0, 2),
     ),
   ];
-  static List<BoxShadow> shadowPrimary = [
+  static const List<BoxShadow> shadowPrimary = [
     BoxShadow(
       color: Color(0x520B63E5),
       blurRadius: 22,
