@@ -6,11 +6,11 @@ import '../../widgets/app_field.dart';
 import '../../widgets/app_top_bar.dart';
 
 const _contacts = [
-  {'id': '1', 'name': 'Budi Santoso', 'sub': '0812-3456-7890', 'fav': true},
-  {'id': '2', 'name': 'Citra Dewi', 'sub': '0856-1122-3344', 'fav': true},
-  {'id': '3', 'name': 'Eko Prasetyo', 'sub': '0813-9988-7766', 'fav': false},
-  {'id': '4', 'name': 'Fitri Handayani', 'sub': '0821-4455-6677', 'fav': false},
-  {'id': '5', 'name': 'Gilang Ramadhan', 'sub': '0857-3344-1122', 'fav': false},
+  {'id': '1', 'name': 'Ramzy', 'sub': '0812-3456-7890', 'fav': true},
+  {'id': '2', 'name': 'Solehah', 'sub': '0856-1122-3344', 'fav': true},
+  {'id': '3', 'name': 'Tasalaha', 'sub': '0813-9988-7766', 'fav': false},
+  {'id': '4', 'name': 'Ciaciu', 'sub': '0821-4455-6677', 'fav': false},
+  {'id': '5', 'name': 'Faras Ganjar', 'sub': '0857-3344-1122', 'fav': false},
 ];
 
 const _banks = [
