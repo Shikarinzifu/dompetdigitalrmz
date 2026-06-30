@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'core/router/app_router.dart';
 import 'core/services/deeplink_service.dart';
 import 'core/theme/app_theme.dart';
@@ -9,21 +10,16 @@ import 'core/utils/app_bloc_observer.dart';
 import 'firebase_options.dart';
 import 'injection/injection_container.dart' as di;
 
-// Top-level variable — mencegah DeeplinkService di-garbage collect selama
-// proses berjalan sehingga uriLinkStream tetap aktif untuk in-app deeplinks.
+// Mencegah DeeplinkService di-garbage collect agar stream deeplink tetap aktif.
 late final DeeplinkService _deeplinkService;
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-<<<<<<< HEAD
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-=======
   // Initialize Firebase
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
->>>>>>> 4961ad2 (fix: resolve 55 analyzer issues + redesign UI ke tema hijau lumut)
 
   Bloc.observer = const AppBlocObserver();
 
@@ -37,13 +33,14 @@ void main() async {
   ]);
 
   // Status bar style
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor: Colors.transparent,
-    statusBarIconBrightness: Brightness.dark,
-  ));
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+    ),
+  );
 
-  // Simpan instance agar tidak di-GC — stream subscription harus tetap hidup
-  // untuk menerima in-app deeplinks via onNewIntent (Android singleTop).
+  // Simpan instance agar tidak di-GC sehingga deeplink tetap aktif.
   _deeplinkService = DeeplinkService(AppRouter.router);
   await _deeplinkService.init();
 

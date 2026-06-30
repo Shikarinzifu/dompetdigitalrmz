@@ -5,6 +5,7 @@ import 'app_colors.dart';
 class AppTheme {
   static ThemeData get light {
     const fontFamily = 'PlusJakartaSans';
+
     return ThemeData(
       useMaterial3: true,
       fontFamily: fontFamily,
@@ -13,12 +14,7 @@ class AppTheme {
         primary: AppColors.primary,
         onPrimary: Colors.white,
         secondary: AppColors.green,
-<<<<<<< HEAD
-        surface: AppColors.white,
-        surfaceContainerLowest: AppColors.bg,
-=======
         surface: AppColors.bg,
->>>>>>> 4961ad2 (fix: resolve 55 analyzer issues + redesign UI ke tema hijau lumut)
         error: AppColors.red,
       ),
       scaffoldBackgroundColor: AppColors.bg,
@@ -56,18 +52,30 @@ class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: Colors.white,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 14,
+          vertical: 16,
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
-          borderSide: const BorderSide(color: AppColors.line, width: 1.5),
+          borderSide: const BorderSide(
+            color: AppColors.line,
+            width: 1.5,
+          ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
-          borderSide: const BorderSide(color: AppColors.line, width: 1.5),
+          borderSide: const BorderSide(
+            color: AppColors.line,
+            width: 1.5,
+          ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
-          borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
+          borderSide: const BorderSide(
+            color: AppColors.primary,
+            width: 1.5,
+          ),
         ),
       ),
       dividerColor: AppColors.line2,

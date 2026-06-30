@@ -244,15 +244,17 @@ class _TwoFATotpPageState extends State<TwoFATotpPage> {
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 14.5, color: AppColors.slate500, height: 1.55)),
           const SizedBox(height: 28),
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 80),
-<<<<<<< HEAD
-            transform: _hasError ? (Matrix4.identity()..translateByDouble(8.0, 0, 0, 0)) : Matrix4.identity(),
-=======
-            transform: _hasError ? (Matrix4.identity()..translateByDouble(8.0, 0, 0, 1)) : Matrix4.identity(),
->>>>>>> 4961ad2 (fix: resolve 55 analyzer issues + redesign UI ke tema hijau lumut)
-            child: CodeInput(value: _code, onChanged: _onCodeChanged, hasError: _hasError),
-          ),
+         AnimatedContainer(
+  duration: const Duration(milliseconds: 80),
+  transform: _hasError
+      ? (Matrix4.identity()..translateByDouble(8.0, 0, 0, 1))
+      : Matrix4.identity(),
+  child: CodeInput(
+    value: _code,
+    onChanged: _onCodeChanged,
+    hasError: _hasError,
+  ),
+),
           if (_hasError) ...[
             const SizedBox(height: 12),
             const Text('Kode tidak cocok',

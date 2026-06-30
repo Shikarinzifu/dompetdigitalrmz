@@ -8,7 +8,12 @@ import '../../widgets/feature_icon.dart';
 
 class TwoFANotifPage extends StatefulWidget {
   final String mode;
-  const TwoFANotifPage({super.key, this.mode = 'login'});
+
+  const TwoFANotifPage({
+    super.key,
+    this.mode = 'login',
+  });
+
   @override
   State<TwoFANotifPage> createState() => _TwoFANotifPageState();
 }
@@ -28,17 +33,18 @@ class _TwoFANotifPageState extends State<TwoFANotifPage> {
       listener: (context, state) {
         if (state is OtpVerified) {
           setState(() => _phase = 'approved');
-          final router = GoRouter.of(context);
+
           Future.delayed(const Duration(milliseconds: 900), () {
-<<<<<<< HEAD
-            if (mounted) router.go('/home');
-=======
-            if (mounted && context.mounted) context.go('/home');
->>>>>>> 4961ad2 (fix: resolve 55 analyzer issues + redesign UI ke tema hijau lumut)
+            if (mounted && context.mounted) {
+              context.go('/home');
+            }
           });
         } else if (state is OtpError) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message), backgroundColor: AppColors.red),
+            SnackBar(
+              content: Text(state.message),
+              backgroundColor: AppColors.red,
+            ),
           );
         }
       },
@@ -50,8 +56,13 @@ class _TwoFANotifPageState extends State<TwoFANotifPage> {
               Align(
                 alignment: Alignment.topLeft,
                 child: IconButton(
-                  icon: const Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.ink),
-                  onPressed: () => context.go(widget.mode == 'setup' ? '/setup-2fa' : '/login'),
+                  icon: const Icon(
+                    Icons.arrow_back_ios_new_rounded,
+                    color: AppColors.ink,
+                  ),
+                  onPressed: () => context.go(
+                    widget.mode == 'setup' ? '/setup-2fa' : '/login',
+                  ),
                 ),
               ),
               Expanded(
@@ -70,7 +81,10 @@ class _TwoFANotifPageState extends State<TwoFANotifPage> {
                       ),
                       const SizedBox(height: 26),
                       Text(
-                        _phase == 'approved' ? 'Disetujui!' : 'Cek notifikasi kamu',
+                        _phase == 'approved'
+                            ? 'Disetujui!'
+                            : 'Cek notifikasi kamu',
+                        textAlign: TextAlign.center,
                         style: const TextStyle(
                           fontFamily: 'PlusJakartaSans',
                           fontSize: 23,
@@ -78,7 +92,6 @@ class _TwoFANotifPageState extends State<TwoFANotifPage> {
                           color: AppColors.ink,
                           letterSpacing: -0.3,
                         ),
-                        textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 8),
                       Text(
@@ -103,24 +116,31 @@ class _TwoFANotifPageState extends State<TwoFANotifPage> {
                               height: 18,
                               child: CircularProgressIndicator(
                                 strokeWidth: 2.4,
-                                valueColor: AlwaysStoppedAnimation(AppColors.green),
+                                valueColor: AlwaysStoppedAnimation(
+                                  AppColors.green,
+                                ),
                               ),
                             ),
                             SizedBox(width: 10),
-                            Text('Menunggu persetujuan…',
-                                style: TextStyle(
-                                  fontFamily: 'PlusJakartaSans',
-                                  fontSize: 13.5,
-                                  color: AppColors.slate400,
-                                  fontWeight: FontWeight.w600,
-                                )),
+                            Text(
+                              'Menunggu persetujuan…',
+                              style: TextStyle(
+                                fontFamily: 'PlusJakartaSans',
+                                fontSize: 13.5,
+                                color: AppColors.slate400,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
                           ],
                         ),
                       ],
                       const Spacer(),
                       const Text(
                         'Tidak menerima notifikasi? Kirim ulang',
-                        style: TextStyle(fontSize: 12.5, color: AppColors.slate400),
+                        style: TextStyle(
+                          fontSize: 12.5,
+                          color: AppColors.slate400,
+                        ),
                       ),
                     ],
                   ),
