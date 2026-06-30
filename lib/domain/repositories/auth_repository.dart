@@ -2,6 +2,7 @@ import '../entities/user_entity.dart';
 
 abstract class AuthRepository {
   Future<({UserEntity user, String token})> loginWithEmail(String email, String password);
+  Future<({UserEntity user, String token})> loginWithGoogle();
   Future<({UserEntity user, String token})> registerWithOtp({
     required String name,
     required String email,

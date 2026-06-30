@@ -30,7 +30,11 @@ class _TwoFANotifPageState extends State<TwoFANotifPage> {
           setState(() => _phase = 'approved');
           final router = GoRouter.of(context);
           Future.delayed(const Duration(milliseconds: 900), () {
+<<<<<<< HEAD
             if (mounted) router.go('/home');
+=======
+            if (mounted && context.mounted) context.go('/home');
+>>>>>>> 4961ad2 (fix: resolve 55 analyzer issues + redesign UI ke tema hijau lumut)
           });
         } else if (state is OtpError) {
           ScaffoldMessenger.of(context).showSnackBar(

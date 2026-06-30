@@ -246,7 +246,11 @@ class _TwoFATotpPageState extends State<TwoFATotpPage> {
           const SizedBox(height: 28),
           AnimatedContainer(
             duration: const Duration(milliseconds: 80),
+<<<<<<< HEAD
             transform: _hasError ? (Matrix4.identity()..translateByDouble(8.0, 0, 0, 0)) : Matrix4.identity(),
+=======
+            transform: _hasError ? (Matrix4.identity()..translateByDouble(8.0, 0, 0, 1)) : Matrix4.identity(),
+>>>>>>> 4961ad2 (fix: resolve 55 analyzer issues + redesign UI ke tema hijau lumut)
             child: CodeInput(value: _code, onChanged: _onCodeChanged, hasError: _hasError),
           ),
           if (_hasError) ...[

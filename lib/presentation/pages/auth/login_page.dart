@@ -58,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
         }
       },
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.primarySurface,
         body: SafeArea(
           child: Column(
             children: [
@@ -130,6 +130,47 @@ class _LoginPageState extends State<LoginPage> {
                           label: 'Masuk',
                           onPressed: _valid ? _loginWithEmail : null,
                           isLoading: state is AuthLoading || _loading,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      // Divider
+                      const Row(
+                        children: [
+                          Expanded(child: Divider(color: AppColors.line)),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 12),
+                            child: Text('atau', style: TextStyle(fontSize: 13, color: AppColors.slate400)),
+                          ),
+                          Expanded(child: Divider(color: AppColors.line)),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      // Google Sign-In Button
+                      BlocBuilder<AuthBloc, AuthState>(
+                        builder: (context, state) => SizedBox(
+                          width: double.infinity,
+                          child: OutlinedButton.icon(
+                            style: OutlinedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(vertical: 14),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              side: const BorderSide(color: AppColors.primaryBorder, width: 1.5),
+                            ),
+                            icon: const Icon(Icons.g_mobiledata, size: 24, color: Colors.red),
+                            label: const Text(
+                              'Masuk dengan Google',
+                              style: TextStyle(
+                                fontFamily: 'PlusJakartaSans',
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.ink,
+                              ),
+                            ),
+                            onPressed: state is AuthLoading
+                                ? null
+                                : () => context.read<AuthBloc>().add(AuthLoginWithGoogle()),
+                          ),
                         ),
                       ),
                       const SizedBox(height: 16),

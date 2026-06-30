@@ -13,8 +13,12 @@ class AppTheme {
         primary: AppColors.primary,
         onPrimary: Colors.white,
         secondary: AppColors.green,
+<<<<<<< HEAD
         surface: AppColors.white,
         surfaceContainerLowest: AppColors.bg,
+=======
+        surface: AppColors.bg,
+>>>>>>> 4961ad2 (fix: resolve 55 analyzer issues + redesign UI ke tema hijau lumut)
         error: AppColors.red,
       ),
       scaffoldBackgroundColor: AppColors.bg,
@@ -37,9 +41,9 @@ class AppTheme {
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
           foregroundColor: Colors.white,
-          minimumSize: const Size(double.infinity, 54),
+          minimumSize: const Size(double.infinity, 56),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(20),
           ),
           textStyle: const TextStyle(
             fontFamily: fontFamily,

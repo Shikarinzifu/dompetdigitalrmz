@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import '../core/constants/app_constants.dart';
 import '../core/network/api_client.dart';
 import '../data/datasources/local/secure_storage_datasource.dart';
@@ -22,6 +24,7 @@ import '../domain/usecases/auth/register_with_otp_usecase.dart';
 import '../domain/usecases/auth/send_otp_usecase.dart';
 import '../domain/usecases/auth/verify_email_otp_usecase.dart';
 import '../domain/usecases/auth/login_with_email_usecase.dart';
+import '../domain/usecases/auth/login_with_google_usecase.dart';
 import '../domain/usecases/payment/payment_usecases.dart';
 import '../presentation/blocs/account/account_bloc.dart';
 import '../presentation/blocs/auth/auth_bloc.dart';
@@ -35,6 +38,10 @@ Future<void> init() async {
   const secureStorage = FlutterSecureStorage(
     aOptions: AndroidOptions(encryptedSharedPreferences: true),
   );
+
+  // Firebase
+  sl.registerLazySingleton<fb.FirebaseAuth>(() => fb.FirebaseAuth.instance);
+  sl.registerLazySingleton<GoogleSignIn>(() => GoogleSignIn());
 
   // Pulihkan sesi yang tersimpan agar ApiClient punya token
   // sejak awal — penting untuk cold-start via deeplink yang melewati SplashPage.
@@ -50,7 +57,7 @@ Future<void> init() async {
 
   // Remote datasources
   sl.registerLazySingleton<AuthRemoteDatasource>(
-    () => AuthRemoteDatasourceImpl(sl()),
+    () => AuthRemoteDatasourceImpl(sl(), sl(), sl()),
   );
   sl.registerLazySingleton<OtpRemoteDatasource>(
     () => OtpRemoteDatasourceImpl(sl()),
@@ -78,6 +85,7 @@ Future<void> init() async {
 
   // Use Cases — Auth
   sl.registerLazySingleton(() => LoginWithEmailUsecase(sl()));
+  sl.registerLazySingleton(() => LoginWithGoogleUsecase(sl()));
   sl.registerLazySingleton(() => RegisterWithOtpUsecase(sl()));
   sl.registerLazySingleton(() => VerifyEmailOtpUsecase(sl()));
   sl.registerLazySingleton(() => GetMeUsecase(sl()));
@@ -99,6 +107,7 @@ Future<void> init() async {
   // BLoCs
   sl.registerFactory(() => AuthBloc(
         loginWithEmail: sl(),
+        loginWithGoogle: sl(),
         getMe: sl(),
         logout: sl(),
         authRepo: sl(),

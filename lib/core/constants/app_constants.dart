@@ -3,7 +3,11 @@ class AppConstants {
   static const String appVersion = '1.0.0';
 
   // API
+<<<<<<< HEAD
   static const String baseUrl = 'http://192.168.110.67:8080'; // Backend server
+=======
+  static const String baseUrl = 'http://192.168.100.15:8080'; // PC WiFi IP
+>>>>>>> 4961ad2 (fix: resolve 55 analyzer issues + redesign UI ke tema hijau lumut)
   static const String apiVersion = '/v1';
   static const int connectTimeout = 30;
   static const int receiveTimeout = 30;

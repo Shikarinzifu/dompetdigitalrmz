@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import '../../../domain/entities/user_entity.dart';
 import '../../../domain/usecases/auth/login_with_email_usecase.dart';
+import '../../../domain/usecases/auth/login_with_google_usecase.dart';
 import '../../../domain/usecases/auth/get_me_usecase.dart';
 import '../../../domain/usecases/auth/logout_usecase.dart';
 import '../../../domain/repositories/auth_repository.dart';
@@ -21,6 +22,7 @@ class AuthLoginWithEmail extends AuthEvent {
   @override
   List<Object?> get props => [email, password];
 }
+class AuthLoginWithGoogle extends AuthEvent {}
 class AuthLogoutRequested extends AuthEvent {}
 class AuthUpdateFcmToken extends AuthEvent {
   final String fcmToken;
@@ -60,20 +62,30 @@ class AuthError extends AuthState {
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final LoginWithEmailUsecase _loginWithEmail;
+<<<<<<< HEAD
+=======
+  final LoginWithGoogleUsecase _loginWithGoogle;
+>>>>>>> 4961ad2 (fix: resolve 55 analyzer issues + redesign UI ke tema hijau lumut)
   final LogoutUsecase _logout;
   final AuthRepository _authRepo;
 
   AuthBloc({
     required LoginWithEmailUsecase loginWithEmail,
+    required LoginWithGoogleUsecase loginWithGoogle,
     required GetMeUsecase getMe,
     required LogoutUsecase logout,
     required AuthRepository authRepo,
   })  : _loginWithEmail = loginWithEmail,
+<<<<<<< HEAD
+=======
+        _loginWithGoogle = loginWithGoogle,
+>>>>>>> 4961ad2 (fix: resolve 55 analyzer issues + redesign UI ke tema hijau lumut)
         _logout = logout,
         _authRepo = authRepo,
         super(AuthInitial()) {
     on<AuthCheckRequested>(_onCheckRequested);
     on<AuthLoginWithEmail>(_onLoginWithEmail);
+    on<AuthLoginWithGoogle>(_onLoginWithGoogle);
     on<AuthLogoutRequested>(_onLogout);
     on<AuthUpdateFcmToken>(_onUpdateFcm);
   }
@@ -108,6 +120,22 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(AuthLoading());
     try {
       final result = await _loginWithEmail(event.email, event.password);
+      emit(AuthNeedsVerification(result.user, result.token));
+    } on AuthFailure catch (e) {
+      emit(AuthError(e.message));
+    } on ServerFailure catch (e) {
+      emit(AuthError(e.message));
+    } on NetworkFailure catch (e) {
+      emit(AuthError(e.message));
+    } catch (e) {
+      emit(AuthError('Terjadi kesalahan. Silakan coba lagi.'));
+    }
+  }
+
+  Future<void> _onLoginWithGoogle(AuthLoginWithGoogle event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
+    try {
+      final result = await _loginWithGoogle();
       emit(AuthNeedsVerification(result.user, result.token));
     } on AuthFailure catch (e) {
       emit(AuthError(e.message));
